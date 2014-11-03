@@ -13,7 +13,7 @@ import sys
 import nltk
 from nltk.util import ngrams
 from nltk.collocations import BigramCollocationFinder
-from nltk.probability import FreqDist
+# from nltk.probability import FreqDist
 
 # Figure out the path for the input file
 try:
@@ -32,7 +32,7 @@ for m in REQUIRED_MODULES:
 
 # Parse and update data from input file as stated in the assignments
 tokens = [
-    word.lower() for word in nltk.tokenize.word_tokenize(INPUT_LINES) \
+    word.lower() for word in nltk.tokenize.word_tokenize(INPUT_LINES)
     if word not in [',', '.']
 ]
 
@@ -40,25 +40,29 @@ tokens = [
 bigram_scores = []
 unigram_scores = []
 bc = BigramCollocationFinder.from_words(tokens)
-uc = bc.word_fd
+bc_freq = bc.ngram_fd
+uc_freq = bc.word_fd
+N = uc_freq.N()
 
 # Calculate the probability for unigram
-for gram in uc.items():
+for gram in uc_freq.items():
+    val = float(uc_freq[gram[0]]) / N
     unigram_scores.append({
         'words': gram[0],
-        'score': uc.freq(gram[0])
+        'score': round(val, 2)
     })
 
 # Calculate the probability for bigram
 for gram in ngrams(tokens, 2):
     w1 = gram[0]
     w2 = gram[1]
+    n_ii = bc_freq[(w1, w2)] / (bc.window_size - 1.0)
+    n_ix = uc_freq[w1]
     bigram_scores.append({
         'words': '%s %s' % (w1, w2),
-        'score': bc.score_ngram(
-            lambda c, b, n: c / b[0],
-            w1,
-            w2
+        'score': round(
+            n_ii / n_ix,
+            2
         ),
     })
 
@@ -75,12 +79,17 @@ bigram_scores = sorted(
     reverse=True
 )
 
-print 'Uni-gram:'
+lines = []
+lines.append('Uni-gram:')
 for score in unigram_scores[0:5]:
-    print '%.2f: %s' % (score['score'], score['words'])
+    lines.append('%.2f: %s' % (score['score'], score['words']))
 
-print ''
+lines.append('')
 
-print 'Bi-gram:'
+lines.append('Bi-gram:')
 for score in bigram_scores[0:5]:
-    print '%.2f: %s' % (score['score'], score['words'])
+    lines.append('%.2f: %s' % (score['score'], score['words']))
+
+with open(os.path.join('.', 'output.txt'), 'w') as f:
+    f.write('\n'.join(lines))
+    f.write('\n')
