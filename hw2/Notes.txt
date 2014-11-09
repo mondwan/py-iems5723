@@ -1,0 +1,105 @@
+# HW2 Goal
+
+Given a word, classify whether which category (business or health) this word
+falling in.
+
+To be precise, we are calculating ```P(Category | Word)``` and see which
+category has a higest probability
+
+# Naive bayes rule
+
+From lecture notes, we know
+
+P(C|D)
+~ P(D|C) P(C)
+= Multipication of (P(Wi | C)) * P(C)
+
+Given a document, calculating the probability of this document is category C
+equals to calculate probability of words in document are category C
+
+# Implementation in NLTK
+
+It calculates P(label | features) = P(label) * P(fname*=fval*|label).
+
+# Fill in the gap between NLTK and our task
+
+* For category,
+
+```
+label === Category === C
+```
+
+* For each word,
+
+```
+Word = feature1 * feature2 * ...
+```
+
+* For ```add-one smoothing```, a term from lecture notes,
+
+```
+Similar to the concept of gamma in nltk.probability.ELEProbDist
+```
+
+* For calculating TFIDF,
+
+```
+nltk.text.TextCollection
+```
+
+* For Part of speech,
+
+```
+nltk.pos_tag
+```
+
+* For naive bayes classifier
+
+```
+nltk.classify.NaiveBayesClassifier
+```
+
+## features
+
+* part of speech
+
+```
+    # Include Part of speech as a feature
+    #
+    # After running the program, we found that the POS of most of words in
+    # business area is 'JJR' (Adjective, comparative).
+    #
+    # The result is reasonable since it is common to use wordings like
+    # ```better``` or ```higher``` to do comparisons in business area
+```
+
+* term weighting tf-idf
+
+```
+    # Include tfidf for a given label
+    #
+    # This piece of information tell us the importance of a word to a
+    # document
+```
+
+* last N characters
+    * N = [2,3]
+
+```
+    # Include last N characters as a feature
+    #
+    # Besides the part of speech, below features try to capture the suffix for
+    # given english word.
+    #
+    # In fact, the # of N come from a try and error process. For N = 2 or 3,
+    # different between health area and business area is very obvious
+```
+
+## algorithm
+
+0. Read and pre-process the training data0
+1. Extract features from words in ```health.txt``` and ```business.txt```
+2. Train the classifier with thest features
+3. Extract features from words in ```test.txt```
+4. Feed in those features to classifier and let it decided that which category
+of this word should be

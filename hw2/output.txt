@@ -1,0 +1,10 @@
+bank: business
+biology: health
+brain: health
+child: health
+deliver: business
+food: health
+profit: business
+treatment: health
+virus: health
+warn: business
