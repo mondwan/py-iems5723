@@ -130,7 +130,7 @@ with open(os.path.join('.', 'test.txt'), 'r') as f:
 
 tokens = [
     word.lower() for word in nltk.tokenize.word_tokenize(raw_text)
-    if word.isalpha()
+    # if word.isalpha()
 ]
 
 results = [{
