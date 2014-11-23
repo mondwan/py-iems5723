@@ -1,0 +1,33 @@
+# Notes on pydot
+
+## PYPI Version 1.0.2
+
+1. Why Edge.set() does not work?
+
+Below codes do not work.
+
+```
+e = pydot.Edge(label1, label2)
+e.set('label', 'label1_label2')
+```
+
+Below codes work.
+
+```
+e = pydot.Edge(label1, label2)
+e.obj_dict['attributes']['label'] = 'label1_label2'
+```
+
+The problem comes from the library's implementation
+
+```
+if self.obj_dict['attributes'].has_key(name):
+    self.obj_dict['attributes'][name] = value
+    return True
+    
+# Attribute is not known
+#
+return False
+```
+
+It does not allow to set unknown attributes

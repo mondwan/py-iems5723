@@ -1,0 +1,10 @@
+The edge ('3', 'B')'s betweenness is 0.1
+The edge ('1', 'B')'s betweenness is 0.1
+The edge ('A', '3')'s betweenness is 0.1
+The edge ('A', '2')'s betweenness is 0.1
+The edge ('A', '1')'s betweenness is 0.1
+The edge ('3', '2')'s betweenness is 0.1
+The edge ('2', 'B')'s betweenness is 0.1
+The edge ('1', '2')'s betweenness is 0.1
+The edge ('A', 'B')'s betweenness is 0.1
+The edge ('1', '3')'s betweenness is 0.1
