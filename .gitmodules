@@ -1,0 +1,3 @@
+[submodule "project_razzies"]
+	path = project_razzies
+	url = https://github.com/mondwan/ProjectRazzies
