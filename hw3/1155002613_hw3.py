@@ -50,7 +50,7 @@ for (edge, betweenness_val) in link_betweenness_pairs:
     penwidth = betweenness_val * 5
 
     # Update edge's label and penwidth
-    e = graph.get_edge(edge[0], edge[1])
+    e = pydot.Edge(edge[0], edge[1])
     e.obj_dict['attributes']['label'] = str(betweenness_val)
     e.obj_dict['attributes']['penwidth'] = str(penwidth)
 
